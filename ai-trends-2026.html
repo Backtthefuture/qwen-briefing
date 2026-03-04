@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年AI趋势科普简报</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #c8d9e6;
+            --card-bg: #faf9f7;
+            --pill-pink: #f0b4d4;
+            --pill-mint: #a8d4c4;
+            --pill-sage: #5a7c6a;
+            --pill-lavender: #9b8dc4;
+            --pill-violet: #7c6aad;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --title-size: clamp(1.75rem, 5vw, 3rem);
+            --body-size: clamp(0.9rem, 1.8vw, 1.125rem);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            font-family: var(--font-display);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(0.75rem, 3vw, 2rem);
+            position: relative;
+        }
+
+        .page-card {
+            width: 100%;
+            max-width: min(90vw, 900px);
+            height: 100%;
+            max-height: min(85vh, 700px);
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: clamp(1.5rem, 5vw, 4rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .pills {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pill { width: 24px; border-radius: 12px; }
+        .pill:nth-child(1) { height: 60px; background: var(--pill-pink); }
+        .pill:nth-child(2) { height: 80px; background: var(--pill-mint); }
+        .pill:nth-child(3) { height: 100px; background: var(--pill-sage); }
+        .pill:nth-child(4) { height: 80px; background: var(--pill-lavender); }
+        .pill:nth-child(5) { height: 60px; background: var(--pill-violet); }
+
+        h1 {
+            font-size: var(--title-size);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(1.25rem, 3.5vw, 2rem);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        p, li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--pill-mint);
+            color: white;
+            font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+            font-weight: 600;
+            padding: 0.4em 1em;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .number-badge {
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            font-weight: 800;
+            color: var(--pill-sage);
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .bullet-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            width: 8px;
+            height: 8px;
+            background: var(--pill-sage);
+            border-radius: 50%;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.7);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .reveal:nth-child(3) { transition-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Cover -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area" style="text-align: center;">
+            <div class="reveal"><span class="tag">AI科普</span></div>
+            <h1 class="reveal">2026年<br>人工智能趋势</h1>
+            <p class="reveal" style="margin-bottom: 2rem;">从"会聊天"到"会做事"，AI正在改变我们的世界</p>
+            <div class="reveal" style="background: linear-gradient(135deg, #f0b4d4 0%, #9b8dc4 100%); padding: 1rem; border-radius: 12px; color: white; font-weight: 600;">
+                10页简报，看懂未来已来
+            </div>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 2: AI Agent -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">01</div>
+            <h2 class="reveal">AI Agent：不只是聊天</h2>
+            <p class="reveal" style="margin-bottom: 1rem;">2026年最大的变化：AI从"对话工具"进化为<strong>"行动代理人"</strong></p>
+            
+            <ul class="reveal bullet-list">
+                <li>不只是回答问题，而是<strong>主动解决问题</strong></li>
+                <li>能操作软件、浏览网页、发送邮件</li>
+                <li>像"数字员工"一样为你工作</li>
+            </ul>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 3: Multimodal -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">02</div>
+            <h2 class="reveal">多模态AI：能看能听</h2>
+            <p class="reveal" style="margin-bottom: 1rem;">AI不再只懂文字，而是<strong>能看、能听、能说</strong></p>
+            
+            <div class="reveal grid-2">
+                <div class="card">
+                    <div class="card-icon">👁️</div>
+                    <div><strong>视觉理解</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">识别图片、视频</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎧</div>
+                    <div><strong>语音交互</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">自然对话</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎬</div>
+                    <div><strong>视频分析</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">理解内容逻辑</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✍️</div>
+                    <div><strong>内容生成</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">图文并茂</div>
+                </div>
+            </div>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 4: AI in Workplace -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">03</div>
+            <h2 class="reveal">AI进入工作流</h2>
+            <p class="reveal" style="margin-bottom: 1rem;">普华永道调查：<strong>79%的企业</strong>已采用AI</p>
+            
+            <ul class="reveal bullet-list">
+                <li><strong>自动写代码</strong>：程序员效率提升3-10倍</li>
+                <li><strong>智能客服</strong>：24小时自动回复</li>
+                <li><strong>数据分析</strong>：秒级生成图表</li>
+                <li><strong>文档处理</strong>：自动整理翻译</li>
+            </ul>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 5: Edge AI -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">04</div>
+            <h2 class="reveal">端侧AI：手机里的智能</h2>
+            <p class="reveal" style="margin-bottom: 1rem;">AI不再依赖云端，<strong>直接在设备上运行</strong></p>
+            
+            <div class="reveal grid-2">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <div><strong>更快响应</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">无需联网</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔒</div>
+                    <div><strong>隐私保护</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">数据不上传</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💰</div>
+                    <div><strong>零成本</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">无需API费用</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✈️</div>
+                    <div><strong>离线使用</strong></div>
+                    <div style="font-size: 0.9rem; color: #636e72;">没网也能用</div>
+                </div>
+            </div>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 6: AI Safety -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">05</div>
+            <h2 class="reveal">AI安全与监管</h2>
+            <p class="reveal" style="margin-bottom: 1rem;">AI能力越强，<strong>安全越重要</strong></p>
+            
+            <ul class="reveal bullet-list">
+                <li><strong>防止滥用</strong>：深度伪造检测</li>
+                <li><strong>算法透明</strong>：决策过程可解释</li>
+                <li><strong>数据保护</strong>：隐私与AI训练平衡</li>
+                <li><strong>伦理规范</strong>：AI监管法规</li>
+            </ul>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 7: Daily Life -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">06</div>
+            <h2 class="reveal">AI融入日常生活</h2>
+            
+            <div class="reveal grid-2">
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <div><strong>智能家居</strong></div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚗</div>
+                    <div><strong>智能驾驶</strong></div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <div><strong>个性化学习</strong></div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <div><strong>健康助手</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 8: Future of Work -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">07</div>
+            <h2 class="reveal">未来工作方式</h2>
+            <p class="reveal" style="margin-bottom: 1rem;">IMF预测：AI将影响全球<strong>60%的工作岗位</strong></p>
+            
+            <ul class="reveal bullet-list">
+                <li><strong>重复性工作</strong> → AI自动化</li>
+                <li><strong>创意性工作</strong> → AI辅助</li>
+                <li><strong>人际交往</strong> → 人类主导</li>
+                <li><strong>新职业</strong>：AI训练师、提示词工程师</li>
+            </ul>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 9: How to Prepare -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area">
+            <div class="reveal number-badge">08</div>
+            <h2 class="reveal">如何拥抱AI时代</h2>
+            
+            <ul class="reveal bullet-list">
+                <li><strong>保持好奇心</strong>：尝试ChatGPT等工具</li>
+                <li><strong>学会提问</strong>：好的提示词=好结果</li>
+                <li><strong>批判性思维</strong>：验证AI信息</li>
+                <li><strong>专注人性化技能</strong>：创造力、同理心</li>
+            </ul>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Slide 10: Conclusion -->
+<section class="slide">
+    <div class="page-card">
+        <div class="content-area" style="text-align: center;">
+            <div class="reveal"><span class="tag">结语</span></div>
+            <h1 class="reveal">未来已来</h1>
+            <p class="reveal" style="margin-bottom: 2rem;">AI不是要替代人类，而是要<br><strong>增强人类的能力</strong></p>
+            
+            <div class="reveal" style="background: linear-gradient(135deg, #a8d4c4 0%, #5a7c6a 100%); padding: 1.5rem; border-radius: 16px; color: white;">
+                <div style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">🚀 拥抱AI，拥抱未来</div>
+                <div style="opacity: 0.9;">简报制作：虾总 🦐</div>
+            </div>
+        </div>
+        <div class="pills">
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+            <div class="pill"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.slide').forEach(slide => {
+        observer.observe(slide);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === ' ') {
+            window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+        } else if (e.key === 'ArrowUp') {
+            window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+        }
+    });
+</script>
+
+</body>
+</html>
